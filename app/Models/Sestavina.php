@@ -12,6 +12,10 @@ class Sestavina extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'ime'
+    ];
+
     public function recepti(){
         return $this->belongsToMany(Recept::class, 'receptisestavine');
     }

@@ -12,6 +12,10 @@ class Priprava extends Model
 
     public $timestamps = false;
 
+    protected $fillable = [
+        'naziv'
+    ];
+
     public function recepti(){
         return $this->belongsToMany(Recept::class, 'receptipriprave');
     }

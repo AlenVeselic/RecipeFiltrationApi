@@ -10,6 +10,10 @@ class Dieta extends Model
     protected $table = "diete";
     protected $primaryKey = "iddiete";
 
+    protected $fillable = [
+        'ime'
+    ];
+
     public $timestamps = false;
     public function recepti(){
         return $this->belongsToMany(Recept::class, 'receptidiete');
