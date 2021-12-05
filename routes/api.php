@@ -4,6 +4,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\RecipeController;
+use App\Http\Controllers\DietController;
+use App\Http\Controllers\PrepTypeController;
+use App\Http\Controllers\IngredientController;
+use App\Http\Controllers\DifficultyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +23,14 @@ use App\Http\Controllers\RecipeController;
 Route::prefix('v1')->group(function () {
     
     Route::apiresource('recipes', RecipeController::class);
+
+    Route::apiresource('diets', DietController::class);
+
+    Route::apiresource('preparation-types', PrepTypeController::class);
+
+    Route::apiresource('ingredients', IngredientController::class);
+
+    Route::apiresource('difficulty-levels', DifficultyController::class);
 
 });
 

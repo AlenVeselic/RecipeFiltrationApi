@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dieta;
 use Illuminate\Http\Request;
 
-use App\Models\Recept;
-
-class RecipeController extends Controller
+class DietController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,9 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        // get all recipes
-        return Recept::with('sestavine', 'priprave', 'zahtevnost', 'diete')->get();
+        // get all diets
+
+        return Dieta::all();
     }
 
     /**
@@ -27,53 +27,52 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        // create a recipe
+        // create a diet
 
         $request->validate([
-            'message' => 'required'
+            'ime' => 'required'
         ]);
 
-        // return Recept::create($request->all());
-        return ["message" => "Recipe '" .  $request->input('message') . "' created." ];
+        return Dieta::create($request -> all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Dieta  $dieta
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        // show a recipe
-        return Recept::with('sestavine', 'priprave', 'zahtevnost', 'diete')->find($id);
+        // get a diet
+        return Dieta::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Dieta  $dieta
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        // update a recipe
-        $recept = Recept::find($id);
-        $recept -> update($request->all());
-        return $recept;
+        // update a diet
+        $updatedDieta = Dieta::find($id);
+        $updatedDieta -> update($request -> all());
+        return $updatedDieta;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Dieta  $dieta
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        // delete a recipe
-        //return Recept::destroy($id);
-        return ["Message" => "Recipe: " . (string) $id. " destroyed."];
+        // delete a diet
+
+        return Dieta::destroy($id);
     }
 }

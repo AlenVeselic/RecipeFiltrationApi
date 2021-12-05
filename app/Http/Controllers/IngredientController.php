@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sestavina;
 use Illuminate\Http\Request;
 
-use App\Models\Recept;
-
-class RecipeController extends Controller
+class IngredientController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,9 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        // get all recipes
-        return Recept::with('sestavine', 'priprave', 'zahtevnost', 'diete')->get();
+        // get all ingredients
+
+        return Sestavina::all();
     }
 
     /**
@@ -27,53 +27,53 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        // create a recipe
-
+        // create an ingredient
         $request->validate([
-            'message' => 'required'
+            'ime' => 'required'
         ]);
 
-        // return Recept::create($request->all());
-        return ["message" => "Recipe '" .  $request->input('message') . "' created." ];
+        return Sestavina::create($request->all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Sestavina  $sestavina
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        // show a recipe
-        return Recept::with('sestavine', 'priprave', 'zahtevnost', 'diete')->find($id);
+        // get one ingredient
+
+        return Sestavina::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Sestavina  $sestavina
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        // update a recipe
-        $recept = Recept::find($id);
-        $recept -> update($request->all());
-        return $recept;
+        // update an ingredient
+        $updatedSestavina = Sestavina::find($id);
+        $updatedSestavina -> update($request -> all());
+        return $updatedSestavina;
+
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Sestavina  $sestavina
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        // delete a recipe
-        //return Recept::destroy($id);
-        return ["Message" => "Recipe: " . (string) $id. " destroyed."];
+        // delete an ingredient
+        return Sestavina::destroy($id);
+
     }
 }

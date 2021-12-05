@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Priprava;
 use Illuminate\Http\Request;
 
-use App\Models\Recept;
-
-class RecipeController extends Controller
+class PrepTypeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,8 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        // get all recipes
-        return Recept::with('sestavine', 'priprave', 'zahtevnost', 'diete')->get();
+        // Get all preparation types
+        return Priprava::all();
     }
 
     /**
@@ -27,53 +26,53 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        // create a recipe
+        // Create a preparation type
 
         $request->validate([
-            'message' => 'required'
+            'naziv' => 'required'
         ]);
 
-        // return Recept::create($request->all());
-        return ["message" => "Recipe '" .  $request->input('message') . "' created." ];
+        return Priprava::create($request -> all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Priprava  $priprava
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        // show a recipe
-        return Recept::with('sestavine', 'priprave', 'zahtevnost', 'diete')->find($id);
+        // get a preparation type
+
+        return Priprava::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Priprava  $priprava
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        // update a recipe
-        $recept = Recept::find($id);
-        $recept -> update($request->all());
-        return $recept;
+        // update a preparation type
+        $updatedPriprava = Priprava::find($id);
+        $updatedPriprava -> update($request -> all());
+        return $updatedPriprava;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Priprava  $priprava
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        // delete a recipe
-        //return Recept::destroy($id);
-        return ["Message" => "Recipe: " . (string) $id. " destroyed."];
+        // delete a priprava
+
+        return Priprava::destroy($id);
     }
 }

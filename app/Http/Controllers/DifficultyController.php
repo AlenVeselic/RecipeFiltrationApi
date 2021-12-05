@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Zahtevnost;
 use Illuminate\Http\Request;
 
-use App\Models\Recept;
-
-class RecipeController extends Controller
+class DifficultyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,8 +14,9 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        // get all recipes
-        return Recept::with('sestavine', 'priprave', 'zahtevnost', 'diete')->get();
+        // get all difficulty levels
+
+        return Zahtevnost::all();
     }
 
     /**
@@ -27,53 +27,54 @@ class RecipeController extends Controller
      */
     public function store(Request $request)
     {
-        // create a recipe
+        // create a difficulty level
 
-        $request->validate([
-            'message' => 'required'
+        $request -> validate([
+            "naziv" => 'required'
         ]);
 
-        // return Recept::create($request->all());
-        return ["message" => "Recipe '" .  $request->input('message') . "' created." ];
+        return Zahtevnost::create($request-> all());
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\Zahtevnost  $zahtevnost
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        // show a recipe
-        return Recept::with('sestavine', 'priprave', 'zahtevnost', 'diete')->find($id);
+        // get one difficulty level
+
+        return Zahtevnost::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\Zahtevnost  $zahtevnost
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        // update a recipe
-        $recept = Recept::find($id);
-        $recept -> update($request->all());
-        return $recept;
+        // update a difficulty level
+
+        $updatedDifficulty = Zahtevnost::find($id);
+        $updatedDifficulty -> update($request -> all());
+        return $updatedDifficulty;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\Zahtevnost  $zahtevnost
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        // delete a recipe
-        //return Recept::destroy($id);
-        return ["Message" => "Recipe: " . (string) $id. " destroyed."];
+        // delete a difficulty level
+
+        return Zahtevnost::destroy($id);
     }
 }
