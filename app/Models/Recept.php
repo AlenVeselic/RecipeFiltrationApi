@@ -39,11 +39,11 @@ class Recept extends Model
     }
 
     public function diete(){
-        return $this->belongsToMany(Dieta::class, "receptidiete");
+        return $this->belongsToMany(Dieta::class, "receptidiete",'idRecepta','idDiete');
     }
 
     public function sestavine(){
-        return $this->belongsToMany(Sestavina::class, 'receptisestavine')
+        return $this->belongsToMany(Sestavina::class, 'receptisestavine','idRecepta', 'idSestavine')
         ->withPivot('kolicina', 'enota');
     }
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sestavina extends Model
 {
     protected $table = "sestavine";
-    protected $primaryKey = "idsestavine";
+    protected $primaryKey = "idSestavine";
 
     public $timestamps = false;
 

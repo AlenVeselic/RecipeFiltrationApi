@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Dieta extends Model
 {
     protected $table = "diete";
-    protected $primaryKey = "iddiete";
+    protected $primaryKey = "idDiete";
 
     protected $fillable = [
         'ime'
@@ -16,7 +16,7 @@ class Dieta extends Model
 
     public $timestamps = false;
     public function recepti(){
-        return $this->belongsToMany(Recept::class, 'receptidiete');
+        return $this->belongsToMany(Recept::class, 'receptidiete','idDiete','idRecepta');
     }
     use HasFactory;
 }
