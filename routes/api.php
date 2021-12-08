@@ -21,7 +21,8 @@ use App\Http\Controllers\DifficultyController;
 */
 
 Route::prefix('v1')->group(function () {
-    
+
+    Route::post('/recipes/search', [RecipeController::class, 'search']);
     Route::apiresource('recipes', RecipeController::class);
 
     Route::apiresource('diets', DietController::class);

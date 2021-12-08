@@ -76,4 +76,49 @@ class RecipeController extends Controller
         //return Recept::destroy($id);
         return ["Message" => "Recipe: " . (string) $id. " destroyed."];
     }
+
+    public function search(Request $request){
+        $request -> validate([
+            "ingredients" => "required"
+        ]);
+
+        $recipes = Recept::with('sestavine','priprave', 'zahtevnost', 'diete');
+
+        if(count($request->ingredients) == 1 && $request->ingredients[0] == ""){
+        }else if(count($request->ingredients) == 1){
+            echo $request->ingredients[0];
+            $recipes = $recipes->whereRelation('sestavine', 'ime', $request->ingredients[0]);
+            
+        }else if(count($request->ingredients) > 1){
+            $recipes = $recipes->whereHas("sestavine", function($query) use ($request){
+                $query->whereIn('ime', $request->ingredients) ;
+            },"=",count($request->ingredients));
+        }
+        
+        if(count($request->preparationTypes) == 1 && $request->preparationTypes[0] == ""){
+
+        }else if(count($request->preparationTypes) == 1){
+
+            $recipes = $recipes -> whereRelation('priprave', 'naziv', $request->preparationTypes[0]);
+
+        }else if(count($request->preparationTypes) > 1){
+
+            $recipes = $recipes->whereHas("priprave", function($query) use ($request){
+                $query->whereIn('naziv', $request->preparationTypes);
+            },"=",count($request->preparationTypes));
+
+        }
+
+        if(count($request->difficultyLevel) == 1 && $request->difficultyLevel[0] != ""){
+            $recipes = $recipes -> whereRelation('zahtevnost', 'naziv', $request->difficultyLevel[0]);
+        }
+
+
+        return $recipes->get();
+        
+
+
+        
+
+    }
 }
