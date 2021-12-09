@@ -112,8 +112,10 @@ class RecipeController extends Controller
         if(count($request->difficultyLevel) == 1 && $request->difficultyLevel[0] != ""){
             $recipes = $recipes -> whereRelation('zahtevnost', 'naziv', $request->difficultyLevel[0]);
         }
-
-
+        
+        if($request->searchQuery){
+            $recipes = $recipes -> where('ime', 'ILIKE', "%{$request->searchQuery}%");
+        }
         return $recipes->get();
         
 
