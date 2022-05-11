@@ -86,7 +86,6 @@ class RecipeController extends Controller
 
         if(count($request->ingredients) == 1 && $request->ingredients[0] == ""){
         }else if(count($request->ingredients) == 1){
-            echo $request->ingredients[0];
             $recipes = $recipes->whereRelation('sestavine', 'ime', $request->ingredients[0]);
             
         }else if(count($request->ingredients) > 1){
@@ -117,10 +116,14 @@ class RecipeController extends Controller
             $recipes = $recipes -> where('ime', 'ILIKE', "%{$request->searchQuery}%");
         }
         return $recipes->get();
-        
 
+    }
 
-        
+    public function ids(){
+        $recipes = Recept::get();
+
+        return $recipes -> map(function($recipe){ return $recipe->only('idrecepta')['idrecepta']; });
+
 
     }
 }

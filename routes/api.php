@@ -22,6 +22,7 @@ use App\Http\Controllers\DifficultyController;
 
 Route::prefix('v1')->group(function () {
 
+    Route::get('/recipeIds', [RecipeController::class, 'ids']);
     Route::post('/recipes/search', [RecipeController::class, 'search']);
     Route::apiresource('recipes', RecipeController::class);
 
