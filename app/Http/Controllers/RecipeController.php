@@ -115,7 +115,7 @@ class RecipeController extends Controller
         if($request->searchQuery){
             $recipes = $recipes -> where('ime', 'ILIKE', "%{$request->searchQuery}%");
         }
-        return $recipes->get();
+        return $recipes->paginate(25);
 
     }
 
